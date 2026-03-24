@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klima | Die expressive Wetter-App</title>
+    <!-- Outfit Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF8F00;
+            --secondary: #FFB300;
+            --bg: #FFF8E1;
+            --text: #3E2723;
+            --white: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 200;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-text p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .hero-mockup {
+            max-width: 320px;
+            width: 100%;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 40px;
+            transition: transform 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-mockup:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-btn {
+            background: var(--white);
+            color: var(--primary);
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            background: var(--bg);
+        }
+
+        /* Features Section */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2.section-header {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 32px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 143, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card span {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* Tech Section */
+        .tech-section {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            background: var(--text);
+            color: var(--white);
+            opacity: 0.95;
+        }
+
+        footer p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-text p { font-size: 1.1rem; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Klima</h1>
+                <p>Erlebe das Wetter so expressiv wie nie zuvor. Wunderschöne Material You Designs treffen auf präzise Daten.</p>
+            </div>
+            <a href="#features" class="cta-btn">Mehr entdecken</a>
+            <img src="app_mockup.png" alt="App Mockup" class="hero-mockup">
+        </div>
+    </header>
+
+    <section id="features">
+        <h2 class="section-header">Warum Klima?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span>🎨</span>
+                <h3>Material You</h3>
+                <p>Die App passt sich deinem Hintergrundbild an und nutzt modernste MD3-Prinzipien.</p>
+            </div>
+            <div class="feature-card">
+                <span>🌤️</span>
+                <h3>Dynamisch</h3>
+                <p>Hintergrundverläufe und Animationen ändern sich in Echtzeit passend zum Wetter.</p>
+            </div>
+            <div class="feature-card">
+                <span>📍</span>
+                <h3>Präzise</h3>
+                <p>Lokale Wetterdaten von Open-Meteo direkt für deinen Standort, minutengenau.</p>
+            </div>
+            <div class="feature-card">
+                <span>🗺️</span>
+                <h3>Wetterkarte</h3>
+                <p>Integrierte OpenStreetMap-Ansicht mit Temperatur-Markern für den Überblick.</p>
+            </div>
+            <div class="feature-card">
+                <span>📊</span>
+                <h3>Einblicke</h3>
+                <p>UV-Index, Sonnenstand, Sichtweite und Luftdruck – alles auf einen Blick.</p>
+            </div>
+            <div class="feature-card">
+                <span>⚙️</span>
+                <h3>Anpassbar</h3>
+                <p>Wähle deine Einheiten und Sprache. Alles für dein optimales Wettererlebnis.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-section">
+        <h2 class="section-header">Powered by Innovation</h2>
+        <div class="tech-grid">
+            <div class="tech-badge">Flutter 3.x</div>
+            <div class="tech-badge">Dart</div>
+            <div class="tech-badge">Open-Meteo API</div>
+            <div class="tech-badge">Provider</div>
+            <div class="tech-badge">Material 3</div>
+            <div class="tech-badge">Google Fonts</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Klima Labs. Entwickelt mit ❤️ für ein besseres Wettergefühl.</p>
+        <p>Daten von Open-Meteo und OpenStreetMap. Lizensiert unter MIT.</p>
+    </footer>
+
+</body>
+</html>
