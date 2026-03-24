@@ -8,7 +8,7 @@
 
 ---
 
-### 🌐 [**Visit the Live Showcase**](https://your-username.github.io/klima)
+### 🌐 [**Visit the Live Showcase**](https://David-dev-web.github.io/klima)
 
 ---
 
