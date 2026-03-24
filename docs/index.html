@@ -226,9 +226,68 @@
             .hero-text h1 { font-size: 3rem; }
             .hero-text p { font-size: 1.3rem; }
         }
+
+        /* Dynamic Theme Transitions */
+        body, header, section, footer, .showcase-card, .cta-btn, .lang-switch, h1, h2, h3, p {
+            transition: background 0.8s ease-in-out, color 0.5s ease-in-out, transform 0.4s ease;
+        }
+
+        /* Sunset Theme (18:00 - 21:00) */
+        body.theme-sunset {
+            --primary: #5C6BC0;
+            --secondary: #E64A19;
+            --bg: #1A237E;
+            --text: #ffffff;
+            --white: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --shadow: 0 20px 40px rgba(0,0,0,0.5);
+            --accent: #FF7043;
+        }
+        body.theme-sunset header {
+            background: linear-gradient(135deg, #1A237E 0%, #E64A19 100%);
+        }
+
+        /* Night Theme (21:00 - 07:00) */
+        body.theme-night {
+            --primary: #ff4444; /* Soft Nothing Red */
+            --secondary: #222222;
+            --bg: #000000;
+            --text: #e0e0e0;
+            --white: #ffffff;
+            --card-bg: #111111;
+            --shadow: 0 0 30px rgba(255,0,0,0.15);
+            --accent: #ff4444;
+        }
+        body.theme-night header {
+            background: #000000;
+        }
+        body.theme-night .cta-btn {
+            background: #ff4444;
+            color: #ffffff;
+        }
+        body.theme-night .showcase-card {
+            border: 1px solid rgba(255, 68, 68, 0.2);
+        }
     </style>
 </head>
 <body>
+    <script>
+        (function() {
+            function updateTheme() {
+                const hour = new Date().getHours();
+                const b = document.body;
+                b.classList.remove('theme-sunset', 'theme-night');
+                if (hour >= 18 && hour < 21) {
+                    b.classList.add('theme-sunset');
+                } else if (hour >= 21 || hour < 7) {
+                    b.classList.add('theme-night');
+                }
+            }
+            updateTheme();
+            // Also check periodically
+            setInterval(updateTheme, 60000);
+        })();
+    </script>
 
     <div class="lang-switch">
         <button class="lang-btn active" onclick="setLang('de')">DE</button>
