@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
             if (wp.isLoading && wp.data == null) 
               SliverFillRemaining(child: _Shimmer(cs: cs))
             else if (wp.error != null && wp.data == null)
-              SliverFillRemaining(child: _Error(wp: wp, msg: wp.error!))
+              SliverFillRemaining(child: _Error(wp: wp, msg: wp.error ?? 'Fehler'))
             else if (wp.data != null)
               SliverToBoxAdapter(child: _Content(wp: wp, data: wp.data!, cs: cs)),
           ],

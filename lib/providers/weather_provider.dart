@@ -93,20 +93,39 @@ class WeatherProvider extends ChangeNotifier {
       final name = await _service.reverseGeocode(pos.latitude, pos.longitude);
       final formattedName = name.startsWith('📍') ? name : '📍 $name';
       
-      _data = await _service.fetchWeather(latitude: pos.latitude, longitude: pos.longitude, locationName: formattedName);
+      final fetchedData = await _service.fetchWeather(
+        latitude: pos.latitude, 
+        longitude: pos.longitude, 
+        locationName: formattedName
+      );
+      
+      _data = fetchedData;
       _loading = false;
+      
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('cached_weather', _data!.encode());
     } catch (e) {
       debugPrint('Refetch failed ($e). Falling back to Berlin/Cache.');
+      _loading = false;
+      
       if (_data == null) {
         try {
-           _data = await _service.fetchWeather(latitude: LocationService.defaultLat, longitude: LocationService.defaultLon, locationName: '📍 Berlin');
-        } catch (_) {
-          _error = 'Laden fehlgeschlagen.';
+           final fallbackData = await _service.fetchWeather(
+             latitude: LocationService.defaultLat, 
+             longitude: LocationService.defaultLon, 
+             locationName: '📍 ${LocationService.defaultName}'
+           );
+           _data = fallbackData;
+        } catch (inner) {
+          _error = translate(
+            'Laden fehlgeschlagen. Bitte Internetverbindung prüfen.', 
+            'Loading failed. Please check your internet connection.'
+          );
         }
+      } else {
+        // We have cached data, but maybe show a snackbar/toast via a message?
+        // For now, just keep the old data.
       }
-      _loading = false;
     }
     notifyListeners();
   }
@@ -116,13 +135,14 @@ class WeatherProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     try {
-      _data = await _service.fetchWeather(latitude: lat, longitude: lon, locationName: name);
+      final fetchedData = await _service.fetchWeather(latitude: lat, longitude: lon, locationName: name);
+      _data = fetchedData;
       _loading = false;
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('cached_weather', _data!.encode());
     } catch (e) {
       _loading = false;
-      _error = 'Fehler: $e';
+      _error = translate('Fehler beim Laden von $name', 'Error loading $name');
     }
     notifyListeners();
   }

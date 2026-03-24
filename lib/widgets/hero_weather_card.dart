@@ -89,6 +89,8 @@ class _HeroWeatherCardState extends State<HeroWeatherCard> with TickerProviderSt
   }
 
   LinearGradient _getDynamicGradient(WeatherData data, ColorScheme colorScheme) {
+    if (data.daily.isEmpty) return LinearGradient(colors: [colorScheme.primary, colorScheme.secondary]);
+
     final now = DateTime.now();
     final today = data.daily.first;
     final isNight = now.isAfter(today.sunset) || now.isBefore(today.sunrise);

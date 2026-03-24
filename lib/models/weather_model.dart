@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import '../services/location_service.dart';
 
 class CurrentWeather {
   final double temperature;
@@ -213,26 +215,29 @@ class WeatherData {
 
   static WeatherData? decode(String encoded) {
     try {
-      final map = jsonDecode(encoded);
+      final map = jsonDecode(encoded) as Map<String, dynamic>;
+      final currentMap = map['current'] as Map<String, dynamic>? ?? {};
+      
       return WeatherData(
         current: CurrentWeather(
-          temperature: (map['current']['temperature_2m'] as num).toDouble(),
-          apparentTemperature: (map['current']['apparent_temperature'] as num).toDouble(),
-          weatherCode: map['current']['weathercode'],
-          windSpeed: (map['current']['windspeed_10m'] as num).toDouble(),
-          humidity: map['current']['relative_humidity_2m'],
-          visibility: (map['current']['visibility'] as num? ?? 10000.0).toDouble(),
-          surfacePressure: (map['current']['surface_pressure'] as num? ?? 1013.25).toDouble(),
+          temperature: (currentMap['temperature_2m'] as num? ?? 0.0).toDouble(),
+          apparentTemperature: (currentMap['apparent_temperature'] as num? ?? 0.0).toDouble(),
+          weatherCode: (currentMap['weathercode'] as num? ?? 0).toInt(),
+          windSpeed: (currentMap['windspeed_10m'] as num? ?? 0.0).toDouble(),
+          humidity: (currentMap['relative_humidity_2m'] as num? ?? 0).toInt(),
+          visibility: (currentMap['visibility'] as num? ?? 10000.0).toDouble(),
+          surfacePressure: (currentMap['surface_pressure'] as num? ?? 1013.25).toDouble(),
           timezone: 'auto',
         ),
-        daily: (map['daily'] as List).map((d) => DailyForecast.fromStoredJson(d)).toList(),
-        hourly: (map['hourly'] as List).map((h) => HourlyForecast.fromStoredJson(h)).toList(),
-        locationName: map['locationName'],
-        latitude: map['latitude'],
-        longitude: map['longitude'],
-        lastUpdated: DateTime.parse(map['lastUpdated']),
+        daily: (map['daily'] as List? ?? []).map((d) => DailyForecast.fromStoredJson(d as Map<String, dynamic>)).toList(),
+        hourly: (map['hourly'] as List? ?? []).map((h) => HourlyForecast.fromStoredJson(h as Map<String, dynamic>)).toList(),
+        locationName: (map['locationName'] as String? ?? 'Berlin'),
+        latitude: (map['latitude'] as num? ?? LocationService.defaultLat).toDouble(),
+        longitude: (map['longitude'] as num? ?? LocationService.defaultLon).toDouble(),
+        lastUpdated: DateTime.tryParse(map['lastUpdated']?.toString() ?? '') ?? DateTime.now(),
       );
-    } catch (_) {
+    } catch (e) {
+      debugPrint('Decoding failed: $e');
       return null;
     }
   }
