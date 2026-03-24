@@ -74,4 +74,4 @@ This project is licensed under the **MIT License**. For more information, please
 
 ---
 
-*Engineered with ❤️ and Intelligence by the Klima Team.*
+*Engineered with ❤️ and Intelligence by David-dev-web.*
