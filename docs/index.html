@@ -16,6 +16,8 @@
             --card-bg: rgba(255, 255, 255, 0.95);
             --shadow: 0 20px 40px rgba(0,0,0,0.1);
             --accent: #E65100;
+            --footer-bg: #3E2723;
+            --footer-text: #ffffff;
         }
 
         * {
@@ -181,8 +183,8 @@
         /* Footer */
         footer {
             padding: 80px 20px;
-            background: var(--text);
-            color: var(--white);
+            background: var(--footer-bg);
+            color: var(--footer-text);
             text-align: center;
         }
 
@@ -201,7 +203,7 @@
         }
 
         .footer-links a {
-            color: var(--white);
+            color: var(--footer-text);
             text-decoration: none;
             opacity: 0.6;
             transition: opacity 0.3s;
@@ -242,6 +244,8 @@
             --card-bg: rgba(255, 255, 255, 0.1);
             --shadow: 0 20px 40px rgba(0,0,0,0.5);
             --accent: #FF7043;
+            --footer-bg: #0D1B3E;
+            --footer-text: #ffffff;
         }
         body.theme-sunset header {
             background: linear-gradient(135deg, #1A237E 0%, #E64A19 100%);
@@ -249,24 +253,30 @@
 
         /* Night Theme (21:00 - 07:00) */
         body.theme-night {
-            --primary: #ff4444; /* Soft Nothing Red */
-            --secondary: #222222;
+            --primary: #ff1111; /* Nothing Red */
+            --secondary: #121212;
             --bg: #000000;
-            --text: #e0e0e0;
+            --text: #eeeeee;
             --white: #ffffff;
             --card-bg: #111111;
-            --shadow: 0 0 30px rgba(255,0,0,0.15);
-            --accent: #ff4444;
+            --shadow: 0 0 30px rgba(255,17,17,0.1);
+            --accent: #ff1111;
+            --footer-bg: #050505;
+            --footer-text: #888888;
         }
         body.theme-night header {
             background: #000000;
         }
         body.theme-night .cta-btn {
-            background: #ff4444;
+            background: #ff1111;
             color: #ffffff;
+            box-shadow: 0 10px 30px rgba(255,17,17,0.3);
         }
         body.theme-night .showcase-card {
-            border: 1px solid rgba(255, 68, 68, 0.2);
+            border: 1px solid rgba(255, 17, 17, 0.15);
+        }
+        body.theme-night .footer-links a {
+            color: #888888;
         }
     </style>
 </head>
