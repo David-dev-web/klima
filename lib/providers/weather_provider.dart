@@ -13,7 +13,7 @@ class WeatherProvider extends ChangeNotifier {
   final _location = LocationService();
 
   WeatherData? _data;
-  bool _loading = false;
+  bool _loading = true;
   String? _error;
 
   TempUnit _tempUnit = TempUnit.celsius;
