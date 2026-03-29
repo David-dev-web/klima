@@ -97,7 +97,7 @@ class WeatherProvider extends ChangeNotifier {
     try {
       final pos = await _location.getCurrentPosition();
       final name = await _service.reverseGeocode(pos.latitude, pos.longitude);
-      final formattedName = name.startsWith('📍') ? name : '📍 $name';
+      final formattedName = name;
       
       final fetchedData = await _service.fetchWeather(
         latitude: pos.latitude, 
@@ -119,7 +119,7 @@ class WeatherProvider extends ChangeNotifier {
            final fallbackData = await _service.fetchWeather(
              latitude: LocationService.defaultLat, 
              longitude: LocationService.defaultLon, 
-             locationName: '📍 ${LocationService.defaultName}'
+             locationName: LocationService.defaultName
            );
            _data = fallbackData;
         } catch (inner) {
@@ -175,6 +175,14 @@ class WeatherProvider extends ChangeNotifier {
     'PRESSURE': {AppLanguage.de: 'Druck', AppLanguage.en: 'Pres'},
     'NOW': {AppLanguage.de: 'Jetzt', AppLanguage.en: 'Now'},
     'TODAY': {AppLanguage.de: 'Heute', AppLanguage.en: 'Today'},
+    'UV': {AppLanguage.de: 'UV-Index', AppLanguage.en: 'UV Index'},
+    'SUNRISE': {AppLanguage.de: 'Aufgang', AppLanguage.en: 'Sunrise'},
+    'SUNSET': {AppLanguage.de: 'Untergang', AppLanguage.en: 'Sunset'},
+    'DRUCK': {AppLanguage.de: 'Luftdruck', AppLanguage.en: 'Pressure'},
+    'RECENT': {AppLanguage.de: 'Zuletzt', AppLanguage.en: 'Recent'},
+    'LANGUAGE': {AppLanguage.de: 'Sprache', AppLanguage.en: 'Language'},
+    'UNIT_TEMP': {AppLanguage.de: 'Temperatur', AppLanguage.en: 'Temperature'},
+    'UNIT_WIND': {AppLanguage.de: 'Windgeschwindigkeit', AppLanguage.en: 'Wind Speed'},
   };
 
   String translate(String key) => _texts[key]?[_lang] ?? key;

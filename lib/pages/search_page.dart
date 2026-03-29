@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/weather_model.dart';
 import '../services/weather_service.dart';
@@ -48,60 +49,103 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     final wp = context.watch<WeatherProvider>();
     final cs = Theme.of(context).colorScheme;
-    final tt = Theme.of(context).textTheme;
 
     return Scaffold(
       backgroundColor: cs.surface,
       appBar: AppBar(
-        title: Text(wp.translate('SEARCH_CITY'), style: tt.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-        backgroundColor: cs.surface,
-        surfaceTintColor: Colors.transparent,
+        title: Text(wp.translate('SEARCH_CITY'), style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 20)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: SearchBar(
-                controller: _controller,
-                hintText: wp.translate('SEARCH_HINT'),
-                leading: const Icon(Icons.search_rounded),
-                onChanged: (v) => _search(v, wp),
-                onSubmitted: (v) => _search(v, wp),
-                elevation: const WidgetStatePropertyAll(2),
-              ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: SearchBar(
+              controller: _controller,
+              hintText: wp.translate('SEARCH_HINT'),
+              leading: Icon(Icons.search_rounded, color: cs.primary),
+              onChanged: (v) => _search(v, wp),
+              onSubmitted: (v) => _search(v, wp),
+              elevation: const WidgetStatePropertyAll(0),
+              backgroundColor: WidgetStatePropertyAll(cs.surfaceContainerHigh),
+              shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+              hintStyle: WidgetStatePropertyAll(TextStyle(color: cs.onSurface.withOpacity(0.5))),
+              padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
             ),
-            Expanded(child: _buildBody(cs, tt, wp)),
-          ],
-        ),
+          ),
+          Expanded(child: _buildBody(cs, wp)),
+        ],
       ),
     );
   }
 
-  Widget _buildBody(ColorScheme cs, TextTheme tt, WeatherProvider wp) {
+  Widget _buildBody(ColorScheme cs, WeatherProvider wp) {
     if (_loading) return const Center(child: CircularProgressIndicator());
-    if (_error != null) {
-      return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [const Text('🔍', style: TextStyle(fontSize: 56)), const SizedBox(height: 16), Text(_error!, style: tt.bodyLarge, textAlign: TextAlign.center)]));
-    }
+    
     if (_results.isEmpty) {
-      return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [const Text('🌍', style: TextStyle(fontSize: 56)), const SizedBox(height: 16), Text(wp.translate('ENTER_CITY'), style: tt.bodyLarge?.copyWith(color: cs.onSurface.withAlpha(153)))]));
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.location_city_rounded, size: 64, color: cs.onSurface.withOpacity(0.1)),
+            const SizedBox(height: 16),
+            Text(
+              _error ?? wp.translate('ENTER_CITY'),
+              style: GoogleFonts.outfit(color: cs.onSurface.withOpacity(0.4), fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
     }
 
-    return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       itemCount: _results.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final r = _results[index];
-        return Card(
-          elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: cs.outlineVariant.withAlpha(128))),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            leading: CircleAvatar(backgroundColor: cs.primaryContainer, child: const Text('🏙️')),
-            title: Text(r.name, style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-            subtitle: Text('${r.admin1 ?? ''}, ${r.country}'.trim(), style: tt.bodyMedium?.copyWith(color: cs.onSurface.withAlpha(153))),
-            trailing: const Icon(Icons.chevron_right_rounded),
-            onTap: () => Navigator.pop(context, r),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Material(
+            color: cs.surfaceContainerHigh,
+            borderRadius: BorderRadius.circular(20),
+            child: InkWell(
+              onTap: () => Navigator.pop(context, r),
+              borderRadius: BorderRadius.circular(20),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(color: cs.primary.withOpacity(0.1), shape: BoxShape.circle),
+                      child: Icon(Icons.location_on_rounded, color: cs.primary, size: 20),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            r.displayName,
+                            style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '${r.admin1 ?? ''}, ${r.country}'.trim().replaceAll(RegExp(r'^, '), ''),
+                            style: GoogleFonts.outfit(color: cs.onSurface.withOpacity(0.5), fontSize: 13),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(Icons.chevron_right_rounded, color: cs.onSurface.withOpacity(0.3)),
+                  ],
+                ),
+              ),
+            ),
           ),
         );
       },

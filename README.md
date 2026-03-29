@@ -1,10 +1,10 @@
-# Klima 🌦️
+# Klima 🌦️ v1.0.0
 
 [![Flutter](https://img.shields.io/badge/Flutter-v3.x-blue.svg)](https://flutter.dev)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Vibecoded](https://img.shields.io/badge/Built%20with-AI%20(Vibecoded)-orange.svg)](#vibecoded-philosophy)
 
-**Klima** is a premium, open-source weather application designed for Android. It seamlessly blends high-precision meteorological data with the **Material You** (Material Design 3) ecosystem, offering a highly personalized and visually expressive experience that adapts to your environment.
+**Klima** is a premium, open-source weather application designed for Android. It seamlessly blends high-precision meteorological data with a specialized **Material You** (Material Design 3) ecosystem, offering a highly personalized and visually expressive experience that adapts to your environment.
 
 ---
 
@@ -15,11 +15,29 @@
 ## 🎨 Features
 
 - **📍 Dynamic Material You**: Native integration with Android's dynamic color system, mirroring your system wallpaper and weather conditions.
-- **🕒 Precision Timeline**: High-fidelity hourly forecasts with 7-day outlooks powered by the Open-Meteo API.
-- **🌡️ Expressive Metrics**: Large-scale temperature displays, real-time "Feels Like" calculations, and humidity/pressure insights.
-- **🗺️ Interactive Map Grid**: Embedded OpenStreetMap visuals with current-time temperature tags.
-- **🌊 Immersive Animations**: Custom high-performance painters for reactive wind and rain effects.
+- **🕒 Precision Timeline**: High-fidelity hourly forecasts with a refined **temperature trend-line** and 7-day outlooks powered by the Open-Meteo API.
+- **🌡️ Proportional Forecasts**: A unique 7-day view with relative temperature bars that visually represent the week's thermal spread.
+- **🗺️ Interactive Map**: Embedded meteorological map views for real-time local context.
+- **✨ Performance-Optimized UI**: Specialized rendering path (removed heavy BackdropFilters for buttery-smooth 60fps scrolling) and consistent emoji-based status icons.
+- **💊 Info Pills**: A swipeable, high-density row of essential metrics like UV-Index, Sunrise/Sunset, Pressure, and Visibility.
 - **⚙️ Advanced Personalization**: Global unit toggles (°C/°F, km/h, m/s, mph) and multi-language support (DE/EN).
+
+---
+
+## 📸 UI Screenshots
+
+The current interface follows a minimalist "Nothing-inspired" aesthetic:
+- **Hero Card**: Large temperature display with thin-weight typography and atmospheric overlays.
+- **Hourly Scroll**: Horizontal cards joined by a fluid temperature curve.
+- **Daily Forecast**: Grouped cards with consistent rounding (24dp) and color-coded temperature bars.
+
+---
+
+## ⚠️ Known Limitations
+
+- **PWA / Web Support**: While technically buildable for web, CORS policies of the geocoding APIs and location services may restrict functionality in a standard browser environment.
+- **Home Screen Widget**: Native Android widgets are currently in research and not yet implemented.
+- **iOS Support**: While the codebase is cross-platform, the current build configuration and testing are focused strictly on **Android (SDK 21+)**.
 
 ---
 
@@ -35,7 +53,7 @@ Klima is a product of the **Vibecoded** development philosophy. This means the a
 - **State Management**: Provider (Centralized state for settings & data)
 - **API**: Open-Meteo (High Precision, Free usage)
 - **Design**: Material 3 / Google Fonts (Outfit)
-- **Maps**: OpenStreetMap / Nominatim
+- **Maps**: OpenStreetMap / Nominatim / Flutter Map
 - **Caching**: SharedPreferences (Offline-first architecture)
 
 ---
@@ -51,20 +69,24 @@ Klima is a product of the **Vibecoded** development philosophy. This means the a
    ```bash
    flutter pub get
    ```
-3. **Run on Android**:
+3. **Build APK**:
    ```bash
-   flutter run
+   flutter build apk --release
    ```
 
 *Note: Ensure your Android device/emulator has internet access and location services enabled for initial weather data lookup.*
 
 ---
 
-## 🤝 Credits & Acknowledgements
+## 🤝 Contributing
 
-- **Meteorological Data**: [Open-Meteo](https://open-meteo.com)
-- **Geocoding**: [OSM Nominatim](https://nominatim.openstreetmap.org)
-- **Mapping**: [OpenStreetMap](https://www.openstreetmap.org)
+Contributions are welcome! If you'd like to improve the animations, add new weather layers, or port the app to iOS, feel free to open a Pull Request.
+
+1. Fork the Project
+2. Create your Feature Branch
+3. Commit your Changes
+4. Push to the Branch
+5. Open a Pull Request
 
 ---
 
@@ -74,4 +96,4 @@ This project is licensed under the **MIT License**. For more information, please
 
 ---
 
-*Engineered with ❤️ and Intelligence by David-dev-web*
+*Engineered with ❤️ by David-dev-web*

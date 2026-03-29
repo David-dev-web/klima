@@ -14,48 +14,21 @@ class WeatherIcon extends StatelessWidget {
   });
 
   static WeatherInfo getInfo(int code) {
-    if (code == 0) {
-      return const WeatherInfo('☀️', 'Klarer Himmel');
-    }
-    if (code == 1) {
-      return const WeatherInfo('🌤️', 'Überwiegend klar');
-    }
-    if (code == 2) {
-      return const WeatherInfo('⛅', 'Teilweise bewölkt');
-    }
-    if (code == 3) {
-      return const WeatherInfo('☁️', 'Bedeckt');
-    }
-    if (code == 45 || code == 48) {
-      return const WeatherInfo('🌫️', 'Neblig');
-    }
-    if (code >= 51 && code <= 55) {
-      return const WeatherInfo('🌦️', 'Nieselregen');
-    }
-    if (code == 56 || code == 57) {
-      return const WeatherInfo('🌧️', 'Gefrierender Nieselregen');
-    }
-    if (code >= 61 && code <= 65) {
-      return const WeatherInfo('🌧️', 'Regen');
-    }
-    if (code == 66 || code == 67) {
-      return const WeatherInfo('🌨️', 'Gefrierender Regen');
-    }
-    if (code >= 71 && code <= 77) {
-      return const WeatherInfo('❄️', 'Schnee');
-    }
-    if (code >= 80 && code <= 82) {
-      return const WeatherInfo('🌦️', 'Regenschauer');
-    }
-    if (code == 85 || code == 86) {
-      return const WeatherInfo('🌨️', 'Schneeschauer');
-    }
-    if (code == 95) {
-      return const WeatherInfo('⛈️', 'Gewitter');
-    }
-    if (code == 96 || code == 99) {
-      return const WeatherInfo('⛈️', 'Gewitter mit Hagel');
-    }
+    if (code == 0) return const WeatherInfo('☀️', 'Klarer Himmel');
+    if (code == 1 || code == 2) return const WeatherInfo('🌤️', 'Leicht bewölkt');
+    if (code == 3) return const WeatherInfo('☁️', 'Bedeckt');
+    if (code == 45 || code == 48) return const WeatherInfo('🌫️', 'Neblig');
+    if (code == 51 || code == 53 || code == 55) return const WeatherInfo('🌦️', 'Nieselregen');
+    if (code == 61 || code == 63 || code == 65) return const WeatherInfo('🌧️', 'Regen');
+    if (code == 71 || code == 73 || code == 75) return const WeatherInfo('❄️', 'Schnee');
+    if (code == 80 || code == 81 || code == 82) return const WeatherInfo('🌧️', 'Regenschauer');
+    if (code == 95) return const WeatherInfo('⛈️', 'Gewitter');
+    if (code == 96 || code == 99) return const WeatherInfo('⛈️', 'Gewitter mit Hagel');
+    
+    // Fallbacks
+    if (code >= 56 && code <= 67) return const WeatherInfo('🌨️', 'Gefrierender Regen');
+    if (code >= 85 && code <= 86) return const WeatherInfo('🌨️', 'Schneeschauer');
+    
     return const WeatherInfo('🌡️', 'Unbekannt');
   }
 
