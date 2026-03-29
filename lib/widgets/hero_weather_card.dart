@@ -42,48 +42,49 @@ class _HeroWeatherCardState extends State<HeroWeatherCard> with TickerProviderSt
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Stack(
-        clipBehavior: Clip.antiAlias,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(32),
-            decoration: BoxDecoration(
-              gradient: _getDynamicGradient(widget.data, colorScheme),
-              borderRadius: BorderRadius.circular(48),
-              boxShadow: [BoxShadow(color: colorScheme.primary.withAlpha(30), blurRadius: 30, offset: const Offset(0, 15))],
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(48),
+        child: Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                gradient: _getDynamicGradient(widget.data, colorScheme),
+                boxShadow: [BoxShadow(color: colorScheme.primary.withAlpha(30), blurRadius: 30, offset: const Offset(0, 15))],
+              ),
+              child: Column(
+                children: [
+                  Hero(tag: 'weather_icon', child: WeatherIcon(code: widget.data.current.weatherCode, size: 80, animated: true)),
+                  const SizedBox(height: 8),
+                  Text(
+                    wp.formatTemp(widget.data.current.temperature),
+                    style: GoogleFonts.outfit(fontSize: 96, fontWeight: FontWeight.w200, color: Colors.white, height: 1),
+                  ),
+                  Text(
+                    '${wp.translate('FEELS_LIKE')} ${wp.formatTemp(widget.data.current.apparentTemperature)}',
+                    style: GoogleFonts.outfit(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white70),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    info.description,
+                    style: GoogleFonts.outfit(fontSize: 24, fontWeight: FontWeight.w400, color: Colors.white.withAlpha(200)),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _StatItem(label: wp.translate('WIND'), value: wp.formatWind(widget.data.current.windSpeed)),
+                      _Dot(),
+                      _StatItem(label: wp.translate('HUMIDITY'), value: '${widget.data.current.humidity}%'),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            child: Column(
-              children: [
-                Hero(tag: 'weather_icon', child: WeatherIcon(code: widget.data.current.weatherCode, size: 80, animated: true)),
-                const SizedBox(height: 8),
-                Text(
-                  wp.formatTemp(widget.data.current.temperature),
-                  style: GoogleFonts.outfit(fontSize: 96, fontWeight: FontWeight.w200, color: Colors.white, height: 1),
-                ),
-                Text(
-                  '${wp.translate('Gefühlt', 'Feels like')} ${wp.formatTemp(widget.data.current.apparentTemperature)}',
-                  style: GoogleFonts.outfit(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white70),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  info.description,
-                  style: GoogleFonts.outfit(fontSize: 24, fontWeight: FontWeight.w400, color: Colors.white.withAlpha(200)),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _StatItem(label: wp.translate('Wind', 'Wind'), value: wp.formatWind(widget.data.current.windSpeed)),
-                    _Dot(),
-                    _StatItem(label: wp.translate('Feuchte', 'Humidity'), value: '${widget.data.current.humidity}%'),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          if (isRainy) Positioned.fill(child: _RainOverlay(controller: _rainController)),
-          if (isWindy) Positioned.fill(child: _WindOverlay(controller: _windController)),
-        ],
+            if (isRainy) Positioned.fill(child: _RainOverlay(controller: _rainController)),
+            if (isWindy) Positioned.fill(child: _WindOverlay(controller: _windController)),
+          ],
+        ),
       ),
     );
   }

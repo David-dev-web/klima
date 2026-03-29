@@ -23,9 +23,9 @@ class InfoPillRow extends StatelessWidget {
           _Pill(icon: Icons.wb_sunny_rounded, label: 'UV: ${today.uvIndex.round()}', cs: cs),
           _Pill(icon: Icons.wb_twilight_rounded, label: '⬆ ${DateFormat('HH:mm').format(today.sunrise)}', cs: cs),
           _Pill(icon: Icons.nights_stay_rounded, label: '⬇ ${DateFormat('HH:mm').format(today.sunset)}', cs: cs),
-          _Pill(icon: Icons.umbrella_rounded, label: '${wp.translate('Regen', 'Rain')}: ${today.precipitationProbability}%', cs: cs),
-          _Pill(icon: Icons.visibility_rounded, label: '${wp.translate('Sicht', 'Vis')}: ${(data.current.visibility / 1000).toStringAsFixed(1)}km', cs: cs),
-          _Pill(icon: Icons.speed_rounded, label: '${wp.translate('Druck', 'Pres')}: ${data.current.surfacePressure.round()}hPa', cs: cs),
+          _Pill(icon: Icons.umbrella_rounded, label: '${wp.translate('RAIN')}: ${today.precipitationProbability}%', cs: cs),
+          _Pill(icon: Icons.visibility_rounded, label: '${wp.translate('VISIBILITY')}: ${(data.current.visibility / 1000).toStringAsFixed(1)}km', cs: cs),
+          _Pill(icon: Icons.speed_rounded, label: '${wp.translate('PRESSURE')}: ${data.current.surfacePressure.round()}hPa', cs: cs),
         ],
       ),
     );

@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: cs.surface,
       body: RefreshIndicator(
-        onRefresh: () => wp.refreshWeather(),
+        onRefresh: () => wp.refreshWeather(force: true),
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
             if (wp.isLoading && wp.data == null) 
               SliverFillRemaining(child: _Shimmer(cs: cs))
             else if (wp.error != null && wp.data == null)
-              SliverFillRemaining(child: _Error(wp: wp, msg: wp.error ?? 'Fehler'))
+              SliverFillRemaining(child: _OfflineView(wp: wp, msg: wp.error ?? 'Error'))
             else if (wp.data != null)
               SliverToBoxAdapter(child: _Content(wp: wp, data: wp.data!, cs: cs)),
           ],
@@ -56,10 +56,13 @@ class _AppBar extends StatelessWidget {
         final res = await Navigator.push<GeocodingResult>(context, MaterialPageRoute(builder: (_) => const SearchPage()));
         if (res != null) wp.loadLocation(res.latitude, res.longitude, res.displayName);
       },
-      child: Text(wp.data?.locationName ?? wp.translate('Lade...', 'Loading...'), style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 18)),
+      child: Text(wp.data?.locationName ?? wp.translate('LOADING'), style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 18)),
     ),
     actions: [
-      IconButton(icon: const Icon(Icons.settings_rounded), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsPage()))),
+      IconButton(
+        icon: const Icon(Icons.settings_rounded), 
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsPage()))
+      ),
     ],
   );
 }
@@ -69,32 +72,37 @@ class _Content extends StatelessWidget {
   const _Content({required this.wp, required this.data, required this.cs});
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      HeroWeatherCard(data: data),
-      const SizedBox(height: 20),
-      InfoPillRow(data: data),
-      const SizedBox(height: 24),
-      _Section(wp.translate('STÜNDLICH', 'HOURLY'), cs),
-      const SizedBox(height: 12),
-      HourlyScroll(hours: data.hourly.where((h) => h.time.isAfter(DateTime.now().subtract(const Duration(hours: 1)))).take(24).toList()),
-      const SizedBox(height: 24),
-      WeatherMapTile(data: data),
-      const SizedBox(height: 24),
-      _Section(wp.translate('7-TAGE-VORHERSAGE', '7-DAY FORECAST'), cs),
-      const SizedBox(height: 12),
-      _ForecastCard(data: data, cs: cs, wp: wp),
-      const SizedBox(height: 32),
-    ],
-  );
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: 'Weather Overview',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          HeroWeatherCard(data: data),
+          const SizedBox(height: 20),
+          InfoPillRow(data: data),
+          const SizedBox(height: 24),
+          _Section(wp.translate('HOURLY'), cs),
+          const SizedBox(height: 12),
+          HourlyScroll(hours: data.hourly.where((h) => h.time.isAfter(DateTime.now().subtract(const Duration(hours: 1)))).take(24).toList()),
+          const SizedBox(height: 24),
+          WeatherMapTile(data: data),
+          const SizedBox(height: 24),
+          _Section(wp.translate('DAILY'), cs),
+          const SizedBox(height: 12),
+          _ForecastCard(data: data, cs: cs, wp: wp),
+          const SizedBox(height: 32),
+        ],
+      ),
+    );
+  }
 }
 
 class _Section extends StatelessWidget {
   final String title; final ColorScheme cs;
   const _Section(this.title, this.cs);
   @override
-  Widget build(BuildContext context) => Padding(padding: const EdgeInsets.symmetric(horizontal: 24), child: Text(title, style: GoogleFonts.outfit(fontWeight: FontWeight.bold, letterSpacing: 1.2)));
+  Widget build(BuildContext context) => Padding(padding: const EdgeInsets.symmetric(horizontal: 24), child: Text(title, style: GoogleFonts.outfit(fontWeight: FontWeight.bold, letterSpacing: 1.2, color: cs.primary)));
 }
 
 class _ForecastCard extends StatelessWidget {
@@ -150,8 +158,41 @@ class _Shimmer extends StatelessWidget {
   ])));
 }
 
-class _Error extends StatelessWidget {
-  final WeatherProvider wp; final String msg; const _Error({required this.wp, required this.msg});
+class _OfflineView extends StatelessWidget {
+  final WeatherProvider wp; final String msg; const _OfflineView({required this.wp, required this.msg});
   @override
-  Widget build(BuildContext context) => Center(child: Column(mainAxisSize: MainAxisSize.min, children: [const Icon(Icons.cloud_off_rounded, size:64, color:Colors.grey), const SizedBox(height:16), Text(msg), const SizedBox(height:24), ElevatedButton(onPressed: wp.refreshWeather, child: const Text('Retry'))]));
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(color: cs.errorContainer, shape: BoxShape.circle),
+              child: Icon(Icons.cloud_off_rounded, size: 64, color: cs.onErrorContainer),
+            ),
+            const SizedBox(height: 24),
+            Text(msg, textAlign: TextAlign.center, style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.w500)),
+            const SizedBox(height: 32),
+            SizedBox(
+              height: 56, width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => wp.refreshWeather(force: true),
+                icon: const Icon(Icons.refresh_rounded),
+                label: Text(wp.translate('RETRY')),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: cs.primary, 
+                  foregroundColor: cs.onPrimary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

@@ -49,13 +49,13 @@ class _WeatherMapTileState extends State<WeatherMapTile> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                wp.translate('WETTERKARTE', 'WEATHER MAP'),
+                wp.translate('WEATHER_MAP'),
                 style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2),
               ),
               TextButton.icon(
                 onPressed: _toggle,
                 icon: Icon(_showOverlay ? Icons.layers_rounded : Icons.layers_outlined, size: 18),
-                label: Text(wp.translate(_showOverlay ? 'Standard' : 'Wetter-Ebene', _showOverlay ? 'Standard' : 'Weather Layer'), style: const TextStyle(fontSize: 12)),
+                label: Text(wp.translate(_showOverlay ? 'STANDARD' : 'WEATHER_LAYER'), style: const TextStyle(fontSize: 12)),
               )
             ],
           ),

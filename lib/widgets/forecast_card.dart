@@ -28,7 +28,7 @@ class ForecastRow extends StatelessWidget {
             SizedBox(
               width: 50,
               child: Text(
-                isToday ? wp.translate('Heute', 'Today') : DateFormat('E', wp.lang == AppLanguage.en ? 'en_US' : 'de_DE').format(forecast.date),
+                isToday ? wp.translate('TODAY') : DateFormat('E', wp.lang == AppLanguage.en ? 'en_US' : 'de_DE').format(forecast.date),
                 style: TextStyle(fontWeight: isToday ? FontWeight.bold : FontWeight.w500, color: isToday ? cs.primary : cs.onSurface),
               ),
             ),

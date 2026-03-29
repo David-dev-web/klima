@@ -38,7 +38,7 @@ class HourlyScroll extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  isNow ? wp.translate('Jetzt', 'Now') : DateFormat('HH:mm').format(h.time),
+                  isNow ? wp.translate('NOW') : DateFormat('HH:mm').format(h.time),
                   style: textTheme.labelSmall?.copyWith(
                     color: isNow ? colorScheme.onPrimaryContainer : colorScheme.onSurface.withAlpha(153),
                     fontWeight: isNow ? FontWeight.bold : FontWeight.normal,

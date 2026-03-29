@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../providers/weather_provider.dart';
+import 'about_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -14,24 +15,24 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: cs.surface,
       appBar: AppBar(
-        title: Text(wp.translate('Einstellungen', 'Settings'), style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+        title: Text(wp.translate('SETTINGS'), style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
         backgroundColor: cs.surface,
         surfaceTintColor: Colors.transparent,
       ),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
-          _SectionHeader(wp.translate('Einheiten', 'Units'), cs),
+          _SectionHeader(wp.customTranslate('Einheiten', 'Units'), cs),
           const SizedBox(height: 16),
           _Setting(
-            label: wp.translate('Temperatur', 'Temperature'),
+            label: wp.customTranslate('Temperatur', 'Temperature'),
             current: wp.tempUnit == TempUnit.celsius ? 'Celsius (°C)' : 'Fahrenheit (°F)',
             options: ['°C', '°F'],
             onSelect: (v) => wp.setTempUnit(v == '°F' ? TempUnit.fahrenheit : TempUnit.celsius),
             cs: cs,
           ),
           _Setting(
-            label: wp.translate('Windgeschwindigkeit', 'Wind Speed'),
+            label: wp.customTranslate('Windgeschwindigkeit', 'Wind Speed'),
             current: wp.windUnit == WindUnit.kmh ? 'km/h' : (wp.windUnit == WindUnit.ms ? 'm/s' : 'mph'),
             options: ['km/h', 'm/s', 'mph'],
             onSelect: (v) {
@@ -46,23 +47,24 @@ class SettingsPage extends StatelessWidget {
             cs: cs,
           ),
           const SizedBox(height: 32),
-          _SectionHeader(wp.translate('Sprache', 'Language'), cs),
+          _SectionHeader(wp.customTranslate('Sprache', 'Language'), cs),
           const SizedBox(height: 16),
           _Setting(
-            label: wp.translate('App-Sprache', 'App Language'),
+            label: wp.customTranslate('App-Sprache', 'App Language'),
             current: wp.lang == AppLanguage.de ? 'Deutsch' : 'English',
             options: ['Deutsch', 'English'],
             onSelect: (v) => wp.setLanguage(v == 'English' ? AppLanguage.en : AppLanguage.de),
             cs: cs,
           ),
           const SizedBox(height: 48),
-          _SectionHeader(wp.translate('Über die App', 'About'), cs),
+          _SectionHeader(wp.translate('ABOUT'), cs),
           const SizedBox(height: 16),
           ListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Version', style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: const Text('1.0.0+2 (Klima)'),
-            trailing: Icon(Icons.info_outline_rounded, color: cs.primary),
+            leading: Icon(Icons.info_outline_rounded, color: cs.primary),
+            title: Text(wp.translate('ABOUT'), style: const TextStyle(fontWeight: FontWeight.bold)),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutPage())),
           ),
         ],
       ),

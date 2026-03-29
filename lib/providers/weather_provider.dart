@@ -83,7 +83,13 @@ class WeatherProvider extends ChangeNotifier {
     await refreshWeather();
   }
 
-  Future<void> refreshWeather() async {
+  Future<void> refreshWeather({bool force = false}) async {
+    // Caching logic: Skip if last update was < 5 minutes ago
+    if (!force && _data != null && DateTime.now().difference(_data!.lastUpdated).inMinutes < 5) {
+      debugPrint('Skipping refetch - data is fresh enough (< 5 min).');
+      return;
+    }
+
     _loading = true;
     _error = null;
     notifyListeners();
@@ -117,14 +123,11 @@ class WeatherProvider extends ChangeNotifier {
            );
            _data = fallbackData;
         } catch (inner) {
-          _error = translate(
-            'Laden fehlgeschlagen. Bitte Internetverbindung prüfen.', 
-            'Loading failed. Please check your internet connection.'
-          );
+          _error = translate('OFFLINE_MSG');
         }
       } else {
-        // We have cached data, but maybe show a snackbar/toast via a message?
-        // For now, just keep the old data.
+        // We have cached data, maybe notify user via a message?
+        _error = null; // Don't show full error screen if we have some data
       }
     }
     notifyListeners();
@@ -142,10 +145,40 @@ class WeatherProvider extends ChangeNotifier {
       await prefs.setString('cached_weather', _data!.encode());
     } catch (e) {
       _loading = false;
-      _error = translate('Fehler beim Laden von $name', 'Error loading $name');
+      _error = '${translate('LOAD_ERROR')} $name';
     }
     notifyListeners();
   }
+
+  // L10n Helper
+  static const Map<String, Map<AppLanguage, String>> _texts = {
+    'LOADING': {AppLanguage.de: 'Lade...', AppLanguage.en: 'Loading...'},
+    'HOURLY': {AppLanguage.de: 'STÜNDLICH', AppLanguage.en: 'HOURLY'},
+    'DAILY': {AppLanguage.de: '7-TAGE-VORHERSAGE', AppLanguage.en: '7-DAY FORECAST'},
+    'OFFLINE_MSG': {AppLanguage.de: 'Laden fehlgeschlagen. Bitte Internetverbindung prüfen.', AppLanguage.en: 'Loading failed. Please check your internet connection.'},
+    'LOAD_ERROR': {AppLanguage.de: 'Fehler beim Laden von', AppLanguage.en: 'Error loading'},
+    'RETRY': {AppLanguage.de: 'Erneut versuchen', AppLanguage.en: 'Retry'},
+    'ABOUT': {AppLanguage.de: 'Über Klima', AppLanguage.en: 'About Klima'},
+    'SETTINGS': {AppLanguage.de: 'Einstellungen', AppLanguage.en: 'Settings'},
+    'FEELS_LIKE': {AppLanguage.de: 'Gefühlt', AppLanguage.en: 'Feels like'},
+    'WIND': {AppLanguage.de: 'Wind', AppLanguage.en: 'Wind'},
+    'HUMIDITY': {AppLanguage.de: 'Feuchte', AppLanguage.en: 'Humidity'},
+    'SEARCH_CITY': {AppLanguage.de: 'Stadt suchen', AppLanguage.en: 'Search city'},
+    'SEARCH_HINT': {AppLanguage.de: 'Nach Stadt suchen...', AppLanguage.en: 'Search for city...'},
+    'NO_CITIES': {AppLanguage.de: 'Keine Städte gefunden', AppLanguage.en: 'No cities found'},
+    'ENTER_CITY': {AppLanguage.de: 'Stadtname eingeben', AppLanguage.en: 'Enter city name'},
+    'WEATHER_MAP': {AppLanguage.de: 'WETTERKARTE', AppLanguage.en: 'WEATHER MAP'},
+    'STANDARD': {AppLanguage.de: 'Standard', AppLanguage.en: 'Standard'},
+    'WEATHER_LAYER': {AppLanguage.de: 'Ebenen', AppLanguage.en: 'Layers'},
+    'RAIN': {AppLanguage.de: 'Regen', AppLanguage.en: 'Rain'},
+    'VISIBILITY': {AppLanguage.de: 'Sicht', AppLanguage.en: 'Vis'},
+    'PRESSURE': {AppLanguage.de: 'Druck', AppLanguage.en: 'Pres'},
+    'NOW': {AppLanguage.de: 'Jetzt', AppLanguage.en: 'Now'},
+    'TODAY': {AppLanguage.de: 'Heute', AppLanguage.en: 'Today'},
+  };
+
+  String translate(String key) => _texts[key]?[_lang] ?? key;
+  String customTranslate(String de, String en) => _lang == AppLanguage.de ? de : en;
 
   // Conversion Helpers
   String formatTemp(double celsius) {
@@ -160,6 +193,4 @@ class WeatherProvider extends ChangeNotifier {
     if (_windUnit == WindUnit.mph) return '${(kmh / 1.609).round()} mph';
     return '${kmh.round()} km/h';
   }
-
-  String translate(String de, String en) => _lang == AppLanguage.de ? de : en;
 }

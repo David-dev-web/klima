@@ -36,11 +36,11 @@ class _SearchPageState extends State<SearchPage> {
         setState(() {
           _results = results;
           _loading = false;
-          if (results.isEmpty) _error = wp.translate('Keine Städte gefunden', 'No cities found');
+          if (results.isEmpty) _error = wp.translate('NO_CITIES');
         });
       }
     } catch (e) {
-      if (mounted) setState(() { _loading = false; _error = wp.translate('Suche fehlgeschlagen', 'Search failed'); });
+      if (mounted) setState(() { _loading = false; _error = wp.translate('LOAD_ERROR'); });
     }
   }
 
@@ -53,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       backgroundColor: cs.surface,
       appBar: AppBar(
-        title: Text(wp.translate('Stadt suchen', 'Search city'), style: tt.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+        title: Text(wp.translate('SEARCH_CITY'), style: tt.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
         backgroundColor: cs.surface,
         surfaceTintColor: Colors.transparent,
       ),
@@ -64,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
               padding: const EdgeInsets.all(16),
               child: SearchBar(
                 controller: _controller,
-                hintText: wp.translate('Nach Stadt suchen...', 'Search for city...'),
+                hintText: wp.translate('SEARCH_HINT'),
                 leading: const Icon(Icons.search_rounded),
                 onChanged: (v) => _search(v, wp),
                 onSubmitted: (v) => _search(v, wp),
@@ -84,7 +84,7 @@ class _SearchPageState extends State<SearchPage> {
       return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [const Text('🔍', style: TextStyle(fontSize: 56)), const SizedBox(height: 16), Text(_error!, style: tt.bodyLarge, textAlign: TextAlign.center)]));
     }
     if (_results.isEmpty) {
-      return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [const Text('🌍', style: TextStyle(fontSize: 56)), const SizedBox(height: 16), Text(wp.translate('Stadtname eingeben', 'Enter city name'), style: tt.bodyLarge?.copyWith(color: cs.onSurface.withAlpha(153)))]));
+      return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [const Text('🌍', style: TextStyle(fontSize: 56)), const SizedBox(height: 16), Text(wp.translate('ENTER_CITY'), style: tt.bodyLarge?.copyWith(color: cs.onSurface.withAlpha(153)))]));
     }
 
     return ListView.separated(
