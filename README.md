@@ -8,7 +8,7 @@
 
 ---
 
-### 🌐 [**Visit the Live Showcase**](https://David-dev-web.github.io/klima)
+### 🌐 [**Visit Developer Portfolio**](https://david-dev-web.github.io/klima)
 
 ---
 
@@ -33,11 +33,19 @@ The current interface follows a minimalist "Nothing-inspired" aesthetic:
 
 ---
 
+## 📂 Project Structure
+
+- **lib/**: Core application logic and Material 3 UI widgets.
+- **docs/**: [Personal Developer Portfolio](https://david-dev-web.github.io/klima) - A modern landing page showcasing projects and developer profile.
+- **assets/**: App high-fidelity resources and iconography.
+
+---
+
 ## ⚠️ Known Limitations
 
-- **PWA / Web Support**: While technically buildable for web, CORS policies of the geocoding APIs and location services may restrict functionality in a standard browser environment.
+- **Android Only**: While the codebase is cross-platform, current build configuration and testing were strictly focused on **Android (SDK 21+)**. 
 - **Home Screen Widget**: Native Android widgets are currently in research and not yet implemented.
-- **iOS Support**: While the codebase is cross-platform, the current build configuration and testing are focused strictly on **Android (SDK 21+)**.
+- **No Web Support**: The web version (PWA) has been deprecated due to cross-origin resource sharing (CORS) limitations on the APIs used.
 
 ---
 
@@ -81,12 +89,6 @@ Klima is a product of the **Vibecoded** development philosophy. This means the a
 ## 🤝 Contributing
 
 Contributions are welcome! If you'd like to improve the animations, add new weather layers, or port the app to iOS, feel free to open a Pull Request.
-
-1. Fork the Project
-2. Create your Feature Branch
-3. Commit your Changes
-4. Push to the Branch
-5. Open a Pull Request
 
 ---
 

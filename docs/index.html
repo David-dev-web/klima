@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klima | The Expressive Weather App</title>
+    <title>David | Flutter Developer from Bavaria</title>
     <!-- Outfit Font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #FF8F00;
-            --secondary: #FFB300;
-            --bg: #FFF8E1;
-            --text: #3E2723;
-            --white: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --shadow: 0 20px 40px rgba(0,0,0,0.1);
-            --accent: #E65100;
-            --footer-bg: #3E2723;
-            --footer-text: #ffffff;
+            --primary: #D3E2FF;
+            --on-primary: #001D49;
+            --primary-container: #004494;
+            --on-primary-container: #D3E2FF;
+            --surface: #1A1C1E;
+            --on-surface: #E2E2E6;
+            --surface-variant: #43474E;
+            --on-surface-variant: #C3C7CF;
+            --accent: #FFB4AB;
+            --bg: #111315;
+            --card-bg: #1D2023;
+            --radius: 28px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -27,42 +30,15 @@
             font-family: 'Outfit', sans-serif;
         }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
+        html {
             scroll-behavior: smooth;
         }
 
-        /* Language Toggle */
-        .lang-switch {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--white);
-            padding: 5px;
-            border-radius: 50px;
-            box-shadow: var(--shadow);
-            display: flex;
-            gap: 5px;
-        }
-
-        .lang-btn {
-            border: none;
-            background: none;
-            padding: 8px 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            color: var(--text);
-        }
-
-        .lang-btn.active {
-            background: var(--primary);
-            color: var(--white);
+        body {
+            background-color: var(--bg);
+            color: var(--on-surface);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* Hero Section */
@@ -71,330 +47,331 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 80px 20px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--white);
+            padding: 40px 20px;
             text-align: center;
-            position: relative;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(211, 226, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(255, 180, 171, 0.05) 0%, transparent 40%),
+                var(--bg);
         }
 
         .hero-content {
-            z-index: 2;
-            max-width: 1200px;
-            animation: fadeInUp 1s ease-out;
+            max-width: 900px;
+            animation: fadeIn 1.2s ease-out;
         }
 
-        .hero-text h1 {
-            font-size: 5rem;
-            font-weight: 200;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero-text p {
-            font-size: 1.8rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto 40px;
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 6.5rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -3px;
+            line-height: 0.9;
+            background: linear-gradient(135deg, #D3E2FF 0%, #FFB4AB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hero-mockup {
-            max-width: 380px;
-            width: 100%;
-            border-radius: 40px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-            transform: translateY(20px);
-            animation: float 6s ease-in-out infinite;
+        .hero-tagline {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 400;
+            color: var(--on-surface-variant);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
 
-        .cta-btn {
-            display: inline-block;
-            background: var(--white);
-            color: var(--primary);
-            padding: 16px 40px;
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 18px 36px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            margin-bottom: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .cta-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            background: var(--bg);
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--on-primary);
         }
 
-        /* Features Section */
-        #features {
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(211, 226, 255, 0.2);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--surface-variant);
+            color: var(--on-surface);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--surface-variant);
+            transform: translateY(-4px);
+        }
+
+        /* Sections */
+        section {
             padding: 120px 20px;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        .section-header {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 80px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-        }
-
-        .showcase-card {
-            background: var(--card-bg);
-            padding: 50px 40px;
-            border-radius: 40px;
-            box-shadow: var(--shadow);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
-            border: 1px solid rgba(255, 143, 0, 0.1);
-        }
-
-        .showcase-card:hover {
-            transform: translateY(-15px) scale(1.02);
-        }
-
-        .showcase-icon {
-            font-size: 5rem;
-            margin-bottom: 30px;
-            display: block;
-        }
-
-        .showcase-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+        h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
             color: var(--accent);
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 700;
         }
 
-        .showcase-card p {
+        .card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            background-color: rgba(29, 32, 35, 0.8);
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 32px;
+        }
+
+        .about-text p {
+            margin-bottom: 24px;
+            color: var(--on-surface-variant);
             font-size: 1.1rem;
-            color: var(--text);
-            opacity: 0.8;
+        }
+
+        .about-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .meta-item {
+            font-size: 0.9rem;
+            color: var(--on-surface-variant);
+        }
+
+        .meta-item strong {
+            color: var(--on-surface);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 32px;
+        }
+
+        .project-card h3 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: var(--on-surface-variant);
+            margin-bottom: 24px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .tag {
+            background-color: var(--surface-variant);
+            color: var(--on-surface-variant);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .project-links .btn {
+            padding: 12px 24px;
+            font-size: 0.85rem;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .skill-badge {
+            background-color: var(--card-bg);
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: 1px solid var(--surface-variant);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .skill-badge:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(1.05);
         }
 
         /* Footer */
         footer {
             padding: 80px 20px;
-            background: var(--footer-bg);
-            color: var(--footer-text);
             text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--on-surface-variant);
+            font-size: 0.9rem;
         }
 
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 200;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .footer-links {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
-
-        .footer-links a {
-            color: var(--footer-text);
+        footer a {
+            color: var(--primary);
             text-decoration: none;
-            opacity: 0.6;
-            transition: opacity 0.3s;
+            font-weight: 600;
         }
 
-        .footer-links a:hover {
-            opacity: 1;
+        @media (max-width: 850px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(20px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @media (max-width: 768px) {
-            .hero-text h1 { font-size: 3rem; }
-            .hero-text p { font-size: 1.3rem; }
-        }
-
-        /* Dynamic Theme Transitions */
-        body, header, section, footer, .showcase-card, .cta-btn, .lang-switch, h1, h2, h3, p {
-            transition: background 0.8s ease-in-out, color 0.5s ease-in-out, transform 0.4s ease;
-        }
-
-        /* Sunset Theme (18:00 - 21:00) */
-        body.theme-sunset {
-            --primary: #5C6BC0;
-            --secondary: #E64A19;
-            --bg: #1A237E;
-            --text: #ffffff;
-            --white: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --shadow: 0 20px 40px rgba(0,0,0,0.5);
-            --accent: #FF7043;
-            --footer-bg: #0D1B3E;
-            --footer-text: #ffffff;
-        }
-        body.theme-sunset header {
-            background: linear-gradient(135deg, #1A237E 0%, #E64A19 100%);
-        }
-
-        /* Night Theme (21:00 - 07:00) */
-        body.theme-night {
-            --primary: #ff1111; /* Nothing Red */
-            --secondary: #121212;
-            --bg: #000000;
-            --text: #eeeeee;
-            --white: #ffffff;
-            --card-bg: #111111;
-            --shadow: 0 0 30px rgba(255,17,17,0.1);
-            --accent: #ff1111;
-            --footer-bg: #050505;
-            --footer-text: #888888;
-        }
-        body.theme-night header {
-            background: #000000;
-        }
-        body.theme-night .cta-btn {
-            background: #ff1111;
-            color: #ffffff;
-            box-shadow: 0 10px 30px rgba(255,17,17,0.3);
-        }
-        body.theme-night .showcase-card {
-            border: 1px solid rgba(255, 17, 17, 0.15);
-        }
-        body.theme-night .footer-links a {
-            color: #888888;
+        @media (max-width: 600px) {
+            .hero-btns { flex-direction: column; }
+            .hero-title { font-size: 3.5rem; }
+            .project-links { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <script>
-        (function() {
-            function updateTheme() {
-                const hour = new Date().getHours();
-                const b = document.body;
-                b.classList.remove('theme-sunset', 'theme-night');
-                if (hour >= 18 && hour < 21) {
-                    b.classList.add('theme-sunset');
-                } else if (hour >= 21 || hour < 7) {
-                    b.classList.add('theme-night');
-                }
-            }
-            updateTheme();
-            // Also check periodically
-            setInterval(updateTheme, 60000);
-        })();
-    </script>
-
-    <div class="lang-switch">
-        <button class="lang-btn active" onclick="setLang('de')">DE</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
-    </div>
-
     <header>
         <div class="hero-content">
-            <div class="hero-text">
-                <h1 id="hero-title">Klima</h1>
-                <p id="hero-tagline">Erlebe das Wetter so expressiv wie nie zuvor. Wunderschöne Material You Designs treffen auf präzise Daten.</p>
-                <a href="./app.html" id="hero-cta" class="cta-btn">App starten</a>
+            <p class="hero-tagline">David</p>
+            <h1 class="hero-title">Young Flutter Developer from Bavaria 🇩🇪</h1>
+            <p class="hero-subtitle">Building beautiful Android apps with Material You design and clean architectures.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+                <a href="https://github.com/David-dev-web" class="btn btn-outline" target="_blank">GitHub</a>
             </div>
-            <img src="app_mockup.png" alt="App Mockup" class="hero-mockup">
         </div>
     </header>
 
-    <section id="features">
-        <h2 class="section-header" id="showcase-title">Kernfunktionen</h2>
-        <div class="showcase-grid">
-            <div class="showcase-card">
-                <span class="showcase-icon">🎨</span>
-                <h3 id="feat1-title">Material You Design</h3>
-                <p id="feat1-desc">Dynamische Farben, die sich deinem Android-Wallpaper anpassen. Ein modernes Interface, das sich lebendig und intuitiv anfühlt.</p>
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-grid">
+            <div class="card about-text">
+                <p>Hey there! I'm a 14-year-old developer based in the heart of Bavaria, Germany. My journey in tech is driven by curiosity and a love for creating high-quality, expressive digital experiences.</p>
+                <p>When I'm not writing Dart code or fine-tuning Flutter animations, you'll find me producing music or building physical objects with my 3D printer.</p>
+                <p>I believe that great software isn't just about functionality—it's about the "vibe" and the connection it creates with the user.</p>
             </div>
-            <div class="showcase-card">
-                <span class="showcase-icon">📡</span>
-                <h3 id="feat2-title">Präzise Vorhersage</h3>
-                <p id="feat2-desc">Minutengenaue Daten von der Open-Meteo API. Stündliche Prognosen und detaillierte 7-Tage-Vorschauen für maximale Sicherheit.</p>
-            </div>
-            <div class="showcase-card">
-                <span class="showcase-icon">🔓</span>
-                <h3 id="feat3-title">Open Source</h3>
-                <p id="feat3-desc">Transparenz und Community-fokussiert. Klima ist komplett quelloffen und setzt auf Datenschutz ohne Tracking oder Werbung.</p>
+            <div class="card about-meta">
+                <div class="meta-item">
+                    <strong>Currently Learning</strong>
+                    Advanced Flutter State Management, Material 3 Design Tokens, AI-Assisted Workflows
+                </div>
+                <div class="meta-item">
+                    <strong>Hardware</strong>
+                    macOS, Android (Pixel), Creality Ender 3
+                </div>
+                <div class="meta-item">
+                    <strong>Interests</strong>
+                    Software Engineering, Music Production, UI/UX Design, 3D Printing
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <span class="footer-logo">Klima</span>
-        <p id="footer-text">Entwickelt mit ❤️ und KI (Vibecoded) für ein besseres Wettergefühl.</p>
-        <div class="footer-links">
-            <a href="https://github.com/David-dev-web/klima">GitHub</a>
-            <a href="#">Privacy</a>
+    <section id="projects">
+        <h2>Featured Work</h2>
+        <div class="projects-grid">
+            <div class="card project-card">
+                <h3>Klima 🌤️</h3>
+                <p>A high-end Material You weather application. Features dynamic 4-stop gradients, trend lines, and a custom-painted weather design system.</p>
+                <div class="tags">
+                    <span class="tag">Flutter</span>
+                    <span class="tag">Dart</span>
+                    <span class="tag">Open-Meteo API</span>
+                    <span class="tag">Material You</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/David-dev-web/klima" class="btn btn-outline" target="_blank">GitHub</a>
+                    <a href="https://github.com/David-dev-web/klima/releases" class="btn btn-primary" target="_blank">Download APK</a>
+                </div>
+            </div>
+
+            <div class="card project-card">
+                <h3>Nothing Clock ⏰</h3>
+                <p>Clock app inspired by Nothing OS with Material Expressive design. Includes alarms, bedtime tracker, stopwatch, timer and BPM tapper.</p>
+                <div class="tags">
+                    <span class="tag">Flutter</span>
+                    <span class="tag">Dart</span>
+                    <span class="tag">Nothing OS</span>
+                    <span class="tag">Material You</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/David-dev-web/Nothing-Android-App" class="btn btn-outline" target="_blank">GitHub</a>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <section id="skills">
+        <h2>Tools & Tech</h2>
+        <div class="skills-container">
+            <div class="skill-badge">Flutter</div>
+            <div class="skill-badge">Dart</div>
+            <div class="skill-badge">Material You</div>
+            <div class="skill-badge">GitHub</div>
+            <div class="skill-badge">VS Code</div>
+            <div class="skill-badge">Music Production</div>
+            <div class="skill-badge">3D Printing (Ender 3)</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built with ❤️ by <a href="https://github.com/David-dev-web" target="_blank">David</a> • Bavaria, Germany • 2026</p>
     </footer>
-
-    <script>
-        const content = {
-            de: {
-                heroTitle: "Klima",
-                heroTagline: "Erlebe das Wetter so expressiv wie nie zuvor. Wunderschöne Material You Designs treffen auf präzise Daten.",
-                showcaseTitle: "Kernfunktionen",
-                feat1Title: "Material You Design",
-                feat1Desc: "Dynamische Farben, die sich deinem Android-Wallpaper anpassen. Ein modernes Interface, das sich lebendig und intuitiv anfühlt.",
-                feat2Title: "Präzise Vorhersage",
-                feat2Desc: "Minutengenaue Daten von der Open-Meteo API. Stündliche Prognosen und detaillierte 7-Tage-Vorschauen für maximale Sicherheit.",
-                feat3Title: "Open Source",
-                feat3Desc: "Transparenz und Community-fokussiert. Klima ist komplett quelloffen und setzt auf Datenschutz ohne Tracking oder Werbung.",
-                heroCta: "App starten",
-                footerText: "Entwickelt mit ❤️ und KI (Vibecoded) für ein besseres Wettergefühl."
-            },
-            en: {
-                heroTitle: "Klima",
-                heroTagline: "Experience weather like never before. Beautiful Material You designs meet precise meteorological data.",
-                showcaseTitle: "Core Features",
-                feat1Title: "Material You Design",
-                feat1Desc: "Dynamic colors that adapt to your Android wallpaper. A modern interface that feels alive and intuitive.",
-                feat2Title: "Precise Forecasts",
-                feat2Desc: "Minute-by-minute data from the Open-Meteo API. Hourly predictions and detailed 7-day outlooks for total peace of mind.",
-                feat3Title: "Open Source",
-                feat3Desc: "Transparent and community-focused. Klima is fully open-source and prioritizes privacy with zero tracking or ads.",
-                heroCta: "Launch App",
-                footerText: "Built with ❤️ and AI (Vibecoded) for a better weather experience."
-            }
-        };
-
-        function setLang(lang) {
-            document.getElementById('hero-title').innerText = content[lang].heroTitle;
-            document.getElementById('hero-tagline').innerText = content[lang].heroTagline;
-            document.getElementById('hero-cta').innerText = content[lang].heroCta;
-            document.getElementById('showcase-title').innerText = content[lang].showcaseTitle;
-            document.getElementById('feat1-title').innerText = content[lang].feat1Title;
-            document.getElementById('feat1-desc').innerText = content[lang].feat1Desc;
-            document.getElementById('feat2-title').innerText = content[lang].feat2Title;
-            document.getElementById('feat2-desc').innerText = content[lang].feat2Desc;
-            document.getElementById('feat3-title').innerText = content[lang].feat3Title;
-            document.getElementById('feat3-desc').innerText = content[lang].feat3Desc;
-            document.getElementById('footer-text').innerText = content[lang].footerText;
-
-            // Toggle active button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.innerText.toLowerCase() === lang) btn.classList.add('active');
-            });
-            document.documentElement.lang = lang;
-        }
-    </script>
 </body>
 </html>
