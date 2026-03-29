@@ -8,7 +8,7 @@
 
 ---
 
-### 🌐 [**Visit Developer Portfolio**](https://david-dev-web.github.io/klima)
+### 🌐 [**Visit the Landing Page**](https://david-dev-web.github.io/klima) | 📲 [**Download Latest APK**](https://github.com/David-dev-web/klima/releases/latest)
 
 ---
 
@@ -33,19 +33,11 @@ The current interface follows a minimalist "Nothing-inspired" aesthetic:
 
 ---
 
-## 📂 Project Structure
-
-- **lib/**: Core application logic and Material 3 UI widgets.
-- **docs/**: [Personal Developer Portfolio](https://david-dev-web.github.io/klima) - A modern landing page showcasing projects and developer profile.
-- **assets/**: App high-fidelity resources and iconography.
-
----
-
 ## ⚠️ Known Limitations
 
 - **Android Only**: While the codebase is cross-platform, current build configuration and testing were strictly focused on **Android (SDK 21+)**. 
 - **Home Screen Widget**: Native Android widgets are currently in research and not yet implemented.
-- **No Web Support**: The web version (PWA) has been deprecated due to cross-origin resource sharing (CORS) limitations on the APIs used.
+- **No Web Support**: The web version (PWA) has been deprecated due to cross-origin resource sharing (CORS) limitations.
 
 ---
 

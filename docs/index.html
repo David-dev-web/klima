@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David | Flutter Developer from Bavaria</title>
+    <title>Klima | The Expressive Weather App</title>
     <!-- Outfit Font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #D3E2FF;
-            --on-primary: #001D49;
-            --primary-container: #004494;
-            --on-primary-container: #D3E2FF;
-            --surface: #1A1C1E;
-            --on-surface: #E2E2E6;
-            --surface-variant: #43474E;
-            --on-surface-variant: #C3C7CF;
-            --accent: #FFB4AB;
-            --bg: #111315;
-            --card-bg: #1D2023;
+            --primary: #FF8F00;
+            --secondary: #FFB300;
+            --bg: #121212;
+            --text: #ffffff;
+            --muted: rgba(255,255,255,0.6);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --shadow: 0 20px 40px rgba(0,0,0,0.5);
+            --accent: #FF5722;
             --radius: 28px;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -30,15 +26,12 @@
             font-family: 'Outfit', sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             background-color: var(--bg);
-            color: var(--on-surface);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* Hero Section */
@@ -47,224 +40,155 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #FF8F00 0%, #FF5722 100%);
+            color: white;
             text-align: center;
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(211, 226, 255, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(255, 180, 171, 0.05) 0%, transparent 40%),
-                var(--bg);
+            position: relative;
         }
 
         .hero-content {
-            max-width: 900px;
-            animation: fadeIn 1.2s ease-out;
+            z-index: 2;
+            max-width: 1200px;
+            animation: fadeInUp 1s ease-out;
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero-title {
-            font-size: clamp(4rem, 12vw, 6.5rem);
-            font-weight: 700;
-            margin-bottom: 12px;
+        .hero-text h1 {
+            font-size: clamp(4.5rem, 15vw, 7rem);
+            font-weight: 200;
+            margin-bottom: 20px;
             letter-spacing: -3px;
             line-height: 0.9;
-            background: linear-gradient(135deg, #D3E2FF 0%, #FFB4AB 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .hero-tagline {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
+        .hero-text p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 40px;
             font-weight: 400;
-            color: var(--on-surface-variant);
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
         }
 
-        .hero-subtitle {
-            font-size: 1.1rem;
-            opacity: 0.7;
-            margin-bottom: 48px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-btns {
+        .cta-btns {
             display: flex;
-            gap: 16px;
+            gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 18px 36px;
-            border-radius: 50px;
+            padding: 22px 44px;
+            border-radius: 60px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            display: inline-flex;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: var(--on-primary);
+        .btn-download {
+            background: white;
+            color: var(--accent);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(211, 226, 255, 0.2);
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
         }
 
-        .btn-outline {
-            border: 1px solid var(--surface-variant);
-            color: var(--on-surface);
+        .btn-github {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .btn-outline:hover {
-            background-color: var(--surface-variant);
-            transform: translateY(-4px);
+        .btn-github:hover {
+            background: rgba(0,0,0,0.3);
+            transform: translateY(-3px);
         }
 
-        /* Sections */
-        section {
+        .version-badge {
+            background: rgba(0,0,0,0.2);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        /* Features */
+        .features {
             padding: 120px 20px;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        h2 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: var(--accent);
+        .section-title {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
             font-weight: 700;
         }
 
-        .card {
-            background-color: var(--card-bg);
-            padding: 40px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .f-card {
+            background: var(--card-bg);
+            padding: 48px;
             border-radius: var(--radius);
-            border: 1px solid rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
             transition: var(--transition);
         }
 
-        .card:hover {
+        .f-card:hover {
+            transform: translateY(-12px);
             border-color: var(--primary);
-            background-color: rgba(29, 32, 35, 0.8);
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
-        /* About */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 32px;
-        }
-
-        .about-text p {
-            margin-bottom: 24px;
-            color: var(--on-surface-variant);
-            font-size: 1.1rem;
-        }
-
-        .about-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .meta-item {
-            font-size: 0.9rem;
-            color: var(--on-surface-variant);
-        }
-
-        .meta-item strong {
-            color: var(--on-surface);
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 32px;
-        }
-
-        .project-card h3 {
-            font-size: 2rem;
-            margin-bottom: 16px;
+        .f-card h3 {
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            color: var(--primary);
             font-weight: 600;
         }
 
-        .project-card p {
-            color: var(--on-surface-variant);
-            margin-bottom: 24px;
+        /* app mockup */
+        .preview {
+            padding-bottom: 120px;
+            text-align: center;
         }
 
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 32px;
-        }
-
-        .tag {
-            background-color: var(--surface-variant);
-            color: var(--on-surface-variant);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 12px;
-        }
-
-        .project-links .btn {
-            padding: 12px 24px;
-            font-size: 0.85rem;
-        }
-
-        /* Skills */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .skill-badge {
-            background-color: var(--card-bg);
-            padding: 14px 28px;
-            border-radius: 50px;
-            border: 1px solid var(--surface-variant);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .skill-badge:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: scale(1.05);
+        .mockup {
+            max-width: 320px;
+            border-radius: 48px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            border: 8px solid #1D2023;
         }
 
         /* Footer */
         footer {
-            padding: 80px 20px;
-            text-align: center;
+            padding: 100px 20px;
             border-top: 1px solid rgba(255,255,255,0.05);
-            color: var(--on-surface-variant);
-            font-size: 0.9rem;
+            text-align: center;
+            color: var(--muted);
         }
 
         footer a {
@@ -273,105 +197,55 @@
             font-weight: 600;
         }
 
-        @media (max-width: 850px) {
-            .about-grid { grid-template-columns: 1fr; }
-            .projects-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 600px) {
-            .hero-btns { flex-direction: column; }
-            .hero-title { font-size: 3.5rem; }
-            .project-links { flex-direction: column; }
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 3.5rem; }
+            .cta-btns { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="hero-content">
-            <p class="hero-tagline">David</p>
-            <h1 class="hero-title">Young Flutter Developer from Bavaria 🇩🇪</h1>
-            <p class="hero-subtitle">Building beautiful Android apps with Material You design and clean architectures.</p>
-            <div class="hero-btns">
-                <a href="#projects" class="btn btn-primary">View Projects ↓</a>
-                <a href="https://github.com/David-dev-web" class="btn btn-outline" target="_blank">GitHub</a>
+            <div class="version-badge">Klima v1.0.0</div>
+            <div class="hero-text">
+                <h1>Expressive Weather</h1>
+                <p>High-fidelity data meets Material You design. A premium meteorological experience for Android.</p>
+            </div>
+            <div class="cta-btns">
+                <a href="https://github.com/David-dev-web/klima/releases/latest" class="btn btn-download">Download APK ↓</a>
+                <a href="https://github.com/David-dev-web/klima" class="btn btn-github">GitHub Repo →</a>
             </div>
         </div>
     </header>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <div class="about-grid">
-            <div class="card about-text">
-                <p>Hey there! I'm a 14-year-old developer based in the heart of Bavaria, Germany. My journey in tech is driven by curiosity and a love for creating high-quality, expressive digital experiences.</p>
-                <p>When I'm not writing Dart code or fine-tuning Flutter animations, you'll find me producing music or building physical objects with my 3D printer.</p>
-                <p>I believe that great software isn't just about functionality—it's about the "vibe" and the connection it creates with the user.</p>
+    <section class="features">
+        <div class="section-title">
+            <h2>Modern. Minimal. Precise.</h2>
+            <p>Designed for humans, powered by Open-Meteo.</p>
+        </div>
+        <div class="grid">
+            <div class="f-card">
+                <h3>🌊 Dynamic Gradients</h3>
+                <p>The background and UI adapt in real-time to the current weather and position of the sun.</p>
             </div>
-            <div class="card about-meta">
-                <div class="meta-item">
-                    <strong>Currently Learning</strong>
-                    Advanced Flutter State Management, Material 3 Design Tokens, AI-Assisted Workflows
-                </div>
-                <div class="meta-item">
-                    <strong>Hardware</strong>
-                    macOS, Android (Pixel), Creality Ender 3
-                </div>
-                <div class="meta-item">
-                    <strong>Interests</strong>
-                    Software Engineering, Music Production, UI/UX Design, 3D Printing
-                </div>
+            <div class="f-card">
+                <h3>📈 Performance First</h3>
+                <p>Optimized rendering path for 60FPS fluid interactions on every device.</p>
+            </div>
+            <div class="f-card">
+                <h3>📍 Private by Design</h3>
+                <p>No tracking, no accounts. Just your weather, your way.</p>
             </div>
         </div>
     </section>
 
-    <section id="projects">
-        <h2>Featured Work</h2>
-        <div class="projects-grid">
-            <div class="card project-card">
-                <h3>Klima 🌤️</h3>
-                <p>A high-end Material You weather application. Features dynamic 4-stop gradients, trend lines, and a custom-painted weather design system.</p>
-                <div class="tags">
-                    <span class="tag">Flutter</span>
-                    <span class="tag">Dart</span>
-                    <span class="tag">Open-Meteo API</span>
-                    <span class="tag">Material You</span>
-                </div>
-                <div class="project-links">
-                    <a href="https://github.com/David-dev-web/klima" class="btn btn-outline" target="_blank">GitHub</a>
-                    <a href="https://github.com/David-dev-web/klima/releases" class="btn btn-primary" target="_blank">Download APK</a>
-                </div>
-            </div>
-
-            <div class="card project-card">
-                <h3>Nothing Clock ⏰</h3>
-                <p>Clock app inspired by Nothing OS with Material Expressive design. Includes alarms, bedtime tracker, stopwatch, timer and BPM tapper.</p>
-                <div class="tags">
-                    <span class="tag">Flutter</span>
-                    <span class="tag">Dart</span>
-                    <span class="tag">Nothing OS</span>
-                    <span class="tag">Material You</span>
-                </div>
-                <div class="project-links">
-                    <a href="https://github.com/David-dev-web/Nothing-Android-App" class="btn btn-outline" target="_blank">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <h2>Tools & Tech</h2>
-        <div class="skills-container">
-            <div class="skill-badge">Flutter</div>
-            <div class="skill-badge">Dart</div>
-            <div class="skill-badge">Material You</div>
-            <div class="skill-badge">GitHub</div>
-            <div class="skill-badge">VS Code</div>
-            <div class="skill-badge">Music Production</div>
-            <div class="skill-badge">3D Printing (Ender 3)</div>
-        </div>
-    </section>
+    <div class="preview">
+        <img src="app_mockup.png" alt="Klima Snapshot" class="mockup" onerror="this.style.display='none'">
+    </div>
 
     <footer>
-        <p>Built with ❤️ by <a href="https://github.com/David-dev-web" target="_blank">David</a> • Bavaria, Germany • 2026</p>
+        <p>Built with ❤️ by <a href="https://github.com/David-dev-web">David</a> • Bavaria, Germany • 2026</p>
     </footer>
 </body>
 </html>
