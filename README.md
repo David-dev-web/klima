@@ -1,6 +1,6 @@
 # Klima 🌦️ v1.0.0
 
-[![Flutter](https://img.shields.io/badge/Flutter-v3.x-blue.svg)](https://flutter.dev)
+[![Flutter](https://img.shields.io/badge/Flutter-blue.svg)](https://flutter.dev)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Vibecoded](https://img.shields.io/badge/Built%20with-AI%20(Vibecoded)-orange.svg)](#vibecoded-philosophy)
 
