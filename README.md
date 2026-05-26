@@ -6,7 +6,8 @@
 
 **Klima** is a premium, open-source weather application designed for Android. It seamlessly blends high-precision meteorological data with a specialized **Material You** (Material Design 3) ecosystem, offering a highly personalized and visually expressive experience that adapts to your environment.
 
-> 🛡️ **Sicherheit:** Die aktuelle APK wird bei jedem Release auf Viren geprüft. Hier geht es zum [VirusTotal Scan-Bericht]([https://virustotal.com](https://www.virustotal.com/gui/file/a0500ad7d003adcfd40c2c3773276324e4a06b3b47766181d85af551b717986f?nocache=1)).
+> 🛡️ **Sicherheit:** Die aktuelle APK wird bei jedem Release auf Viren geprüft. Hier geht es zum [VirusTotal Scan-Bericht](https://www.virustotal.com/gui/file/a0500ad7d003adcfd40c2c3773276324e4a06b3b47766181d85af551b717986f?nocache=1).
+
 
 ---
 
